@@ -39,6 +39,5 @@ public class Vehicle {
 	private int    vehicleAxes;
 	private String vehicleRegistrationDate;
 	private String vehicleCondition;
-	private String RegisterUser;
-	
+	private String RegisterUser; 
 }
