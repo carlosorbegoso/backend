@@ -17,20 +17,25 @@ public class VehicleService implements VehicleRepository {
 	@Override
 	public List<Vehicle> findByVehicleId(int id) {
 		String query = "FROM Vehicle WHERE VehicleId = :id";
-		var results = entityManager.createQuery(query,Vehicle.class)
+		return entityManager.createQuery(query,Vehicle.class)
 				.setParameter("id",id)
 				.getResultList();
-		return null;
 	}
 
 	@Override
 	public List<Vehicle> findByVehicleCensus(String census) {
-		return null;
+		String query = "FROM Vehicle WHERE VehicleCensus =:census";
+		return entityManager.createQuery(query,Vehicle.class)
+				.setParameter("census",census)
+				.getResultList();
 	}
 
 	@Override
 	public List<Vehicle> findByVehicleLicensePlate(String licencePlate) {
-		return null;
+		String query = "FROM  Vehicle WHERE  VehicleLicensePlate =:licence";
+			return  entityManager.createQuery(query,Vehicle.class)
+					.setParameter("licence",licencePlate)
+					.getResultList();
 	}
 
 	@Override
