@@ -1,0 +1,15 @@
+package com.skyblue.backend.security.enums;
+
+public enum RoleName {
+	ROLE_ADMIN,
+	ROLE_USER,
+	ROLE_CASHIER,
+	ROLE_DISPATCHER,
+	ROLE_PAINTER,
+	ROLE_ELECTRICIAN,
+	ROLE_INSPECTOR,
+	ROLE_COUNTER,
+	ROLE_MECHANICAL,
+	ROLE_ECONOMIST,
+	ROLE_TICKET
+}
