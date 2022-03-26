@@ -14,7 +14,7 @@ jobs:
           with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
-            repository:  ${{ github.repository }}
+            repository:  ${{ github.backend }}
             tag_with_ref : true
             tab_with_sha : true
             tags: ${{ github.sha }}
