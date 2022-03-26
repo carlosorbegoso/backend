@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-EXPOSE 8080
-ARG JAR_FILE=build/libs/backend.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ARG JAR_FILE
+docker build --build-arg JAR_FILE=build/libs/*.jar -t myorg/myapp .
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
