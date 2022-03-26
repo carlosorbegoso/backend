@@ -40,4 +40,5 @@ public class Vehicle {
 	private String vehicleRegistrationDate;
 	private String vehicleCondition;
 	private String RegisterUser;
+	
 }
