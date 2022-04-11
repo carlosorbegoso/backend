@@ -1,0 +1,18 @@
+spring:
+    profiles:
+        active: dev
+
+    rsocket:
+        server:
+            transport: websocket
+            port: 8081
+
+jwt:
+    expiration:
+        duration: 3600
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    r2dbc: DEBUG

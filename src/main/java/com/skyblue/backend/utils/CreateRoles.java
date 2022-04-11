@@ -1,12 +1,5 @@
 package com.skyblue.backend.utils;
 
-import com.skyblue.backend.security.entity.Role;
-import com.skyblue.backend.security.enums.RoleName;
-import com.skyblue.backend.security.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 //@Component
 //public class CreateRoles implements CommandLineRunner {
 //	@Autowired

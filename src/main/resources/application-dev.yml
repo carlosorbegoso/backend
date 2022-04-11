@@ -1,0 +1,26 @@
+server:
+  address: 0.0.0.0
+
+spring:
+  r2dbc:
+    username: postgres
+    password: admin
+    url: r2dbc:postgresql://localhost:5432/webflux
+
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    timeout: 500
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+my:
+  filesPath:
+    sqlScript: create_tables.sql  
+  mysql:
+    host: localhost
+    database: webflux
