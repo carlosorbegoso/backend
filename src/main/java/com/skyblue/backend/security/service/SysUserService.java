@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
-
 import com.skyblue.backend.security.model.SysRole;
 import com.skyblue.backend.security.model.SysUser;
 import com.skyblue.backend.security.model.SysUserRole;
@@ -60,6 +58,10 @@ public class SysUserService {
                 .flatMap(this::addRoles);
     }
 
+    public Mono<SysUser>findById(long id){
+        return sysUserRepository.findById(id);
+    }
+
     private Mono<Long> checkRole (String role) {
         return sysRoleRepository.findByName(role)
                 .switchIfEmpty(
@@ -73,7 +75,6 @@ public class SysUserService {
 
 
     private Mono<Void> checkUserRole (List<Long> roleIds, Long userId) {
-
         return sysUserRoleRepository
                 .findByUserId(userId)
                 .map(SysUserRole::getRoleId)
@@ -97,8 +98,8 @@ public class SysUserService {
     }
 
     private Mono<SysUser> saveRoles (SysUser user) {
-
         List<String> roles = user.getRoles();
+        System.out.println(roles);
         if (roles==null || roles.isEmpty()) return Mono.just(user);
         return Mono.from(
                 Flux.fromIterable(roles)
@@ -111,7 +112,6 @@ public class SysUserService {
 
 
     public Mono<SysUser> insert (SysUser user) {
-
         return Mono.just(user)
                 .map(it->it.withPassword(password.encode(user.getPassword())))
                 .flatMap(sysUserRepository::save)
@@ -123,32 +123,30 @@ public class SysUserService {
 
 
     public Mono<SysUser> update (SysUser user) {
-
         return Mono.just(user)
-                .flatMap(it -> sysUserRepository
-                        .findByUsername(user.getUsername())
-                        .map(oldUser -> {
-                            if (it.getPassword() == null || it.getPassword().equals(""))
-                                it.setPassword(oldUser.getPassword());
-                            else it.setPassword(password.encode(user.getPassword()));
-                            return it
-                                    .withCreateBy(oldUser.getCreateBy())
-                                    .withCreateTime(oldUser.getCreateTime());}
-                        ))
+                .map(oldUser -> {
+            if (oldUser.getPassword() == null || oldUser.getPassword().equals(""))
+                oldUser.setPassword(oldUser.getPassword());
+            else oldUser.setPassword(password.encode(user.getPassword()));
+            return oldUser
+                    .withCreateBy(oldUser.getCreateBy())
+                    .withCreateTime(oldUser.getCreateTime() );
+        })
                 .flatMap(sysUserRepository::save)
                 .flatMap(this::saveRoles);
     }
 
-
     public Mono<SysUser> save (SysUser user) {
+
         if (user.getId() != 0) {  //
             return mark.updateObj(user)
                     .flatMap(this::insert);
         }
-        else {   // id为0为create
+        else {   // id is 0 for create
             return mark.createObj(user)
                     .flatMap(this::update);
         }
+
     }
 
 

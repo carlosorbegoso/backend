@@ -15,14 +15,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SysRoleApi implements DataChange {
-
     @Id
     private long id;
-
     private long roleId;
-
     private long apiId;
-
     public SysRoleApi(long roleId, long apiId) {
         this.roleId = roleId;
         this.apiId = apiId;

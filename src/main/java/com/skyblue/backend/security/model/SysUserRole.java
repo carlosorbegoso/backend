@@ -14,23 +14,16 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SysUserRole implements DataChange {
-
     @Id
     private long id;
-
     private long userId;
-
     private long roleId;
-
     @CreatedBy
     private String createBy;
-
     @CreatedDate
     private java.time.LocalDateTime createTime;
-
     @LastModifiedBy
     private String lastUpdateBy;
-
     @LastModifiedDate
     private java.time.LocalDateTime lastUpdateTime;
 

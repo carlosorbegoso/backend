@@ -22,7 +22,6 @@ public class SysUserDetails implements UserDetails {
     private String password;
     private List<String> authorities;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities.stream()

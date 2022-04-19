@@ -99,7 +99,7 @@ public class JwtWebFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         if (request.getMethod() == HttpMethod.OPTIONS) return chain.filter(exchange);
         String path = request.getPath().value();
-        Set<String> permitPath = new HashSet<>(List.of("/api/auth/login", "/api/auth/register"));
+        Set<String> permitPath = new HashSet<>(List.of("/api/auth/login", "/api/auth/logout"));
         if (permitPath.contains(path)) return chain.filter(exchange);
         ServerHttpResponse response = exchange.getResponse();
         String auth = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);

@@ -11,7 +11,6 @@ public class Message {
     private String interaction;
     private long index;
     private long created = Instant.now().getEpochSecond();
-
     public Message(String origin, String interaction) {
         this.origin = origin;
         this.interaction = interaction;

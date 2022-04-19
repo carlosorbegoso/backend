@@ -20,28 +20,17 @@ public class SysUser implements DataChange {
 
     @Id
     private long id;
-
     private String username;
-
     private String avatar;
-
 //    @JsonIgnore   // The request returns fields that json does not want to display
     private String password;
-
     private String email;
-
     private String mobile;
-
     private long frozen;
-
     private String createBy;
-
     private java.time.LocalDateTime createTime;
-
     private String lastUpdateBy;
-
     private java.time.LocalDateTime lastUpdateTime;
-
     @Transient   // does not exist with the field in the database
     private List<String> roles;
 

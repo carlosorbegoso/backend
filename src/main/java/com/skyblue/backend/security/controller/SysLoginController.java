@@ -33,10 +33,6 @@ import com.skyblue.backend.security.service.SysUserService;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author: ffzs
- * @Date: 2020/8/27 下午2:31
- */
 
 @RestController
 @AllArgsConstructor
@@ -57,8 +53,6 @@ public class SysLoginController {
                 .flatMap(sysUserService::findByUsername)
                 .filter(it -> password.matches(user.get("password"), it.getPassword()))
                 .map(it -> {
-                    
-
                             List<String> roles = it.getRoles();
                         
                             String token = jwtSigner.generateToken(SysUserDetails
@@ -82,8 +76,9 @@ public class SysLoginController {
                 }));
     }
 
-    @GetMapping("logout")
-    public Mono<SysHttpResponse> logout (@RequestParam("token") String token) {
+    @PostMapping("logout")
+    public Mono<SysHttpResponse> logout (@RequestParam() String token) {
+        log.info("token"+token);
         return Mono.just(token)
                 .flatMap(redisService::deleteToken)
                 .flatMap(it -> Mono.just(SysHttpResponse.ok(it)))
@@ -92,24 +87,21 @@ public class SysLoginController {
     }
 
 
-    // @PostMapping( "register")
-	// public Mono<ResponseEntity<Flux<SysApi>>> register(SysApi user){
-    //         Flux<SysApi> user_flux = sysApiService.findAll();
+     @PostMapping( "register")
+	 public Mono<ResponseEntity<Flux<SysApi>>> register(SysApi user){
+             Flux<SysApi> user_flux = sysApiService.findAll();
 
-            
-    //         return Mono.just(ResponseEntity.ok()
-    //         .contentType(MediaType.APPLICATION_JSON)
-    //         .body(user_flux));
+             return Mono.just(ResponseEntity.ok()
+             .contentType(MediaType.APPLICATION_JSON)
+             .body(user_flux));
         
-    // }
-
-    @PostMapping( "register")
+     }
+ /*  @PostMapping( "register")
 	public Mono<SysApi> registerUser(@RequestBody  SysApi user){
-         
-        System.out.println(user);
 
-           return sysApiService.save(user);
-        
+      System.out.println(user);
+         return sysApiService.save(user);
+
     }
-
+*/
 }

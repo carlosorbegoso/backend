@@ -19,23 +19,16 @@ public class SysRole implements DataChange {
 
     @Id
     private long id;
-
     private String name;
-
     private String remark;
-
     @CreatedBy
     private String createBy;
-
     @CreatedDate
     private java.time.LocalDateTime createTime;
-
     @LastModifiedBy
     private String lastUpdateBy;
-
     @LastModifiedDate
     private java.time.LocalDateTime lastUpdateTime;
-
     public SysRole(String name) {
         this.name = name;
     }

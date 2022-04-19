@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Builder
 public class SysHttpResponse {
-
     Integer status;
     String message;
     Object data;

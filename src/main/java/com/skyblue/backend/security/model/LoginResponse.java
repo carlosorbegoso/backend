@@ -11,7 +11,6 @@ import java.util.List;
 @Builder
 @With
 public class LoginResponse {
-
     String userid;
     String name;
     String email;
@@ -19,7 +18,6 @@ public class LoginResponse {
     String avatar;
     List<String> roles;
     String token;
-
 
     public static LoginResponse fromUser (SysUser user) {
          return LoginResponse.builder()

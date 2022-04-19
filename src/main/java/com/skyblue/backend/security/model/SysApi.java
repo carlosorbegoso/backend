@@ -20,24 +20,15 @@ import com.skyblue.backend.security.repository.DataChange;
 @NoArgsConstructor
 @With
 public class SysApi implements DataChange {
-
     @Id
     private long id;
-
     private String name;
-
     private String url;
-
     private String remark;
-
     private String createBy;
-
     private java.time.LocalDateTime createTime;
-
     private String lastUpdateBy;
-
     private java.time.LocalDateTime lastUpdateTime;
-
     @Transient   // does not exist with the field in the database
     private List<String> roles;
 
