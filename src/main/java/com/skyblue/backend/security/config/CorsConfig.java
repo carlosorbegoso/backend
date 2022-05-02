@@ -11,7 +11,7 @@ public class CorsConfig implements WebFluxConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // allow path
-                .allowedOriginPatterns("*")  // Origins that allow cross-domain access
+                .allowedOrigins("http://localhost:4200")  // Origins that allow cross-domain access
                 .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")  // Method to allow requests
                 .maxAge(10000)  //Preflight Interval
                 .allowedHeaders("*")  // Allow header settings

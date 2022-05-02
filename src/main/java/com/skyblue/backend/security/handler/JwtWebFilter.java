@@ -59,12 +59,6 @@ public class JwtWebFilter implements WebFilter {
     }
 
 
-    /**
-     * 解析token
-     * 判断权限是否在数据库
-     *
-     * @return
-     */
     private Mono<Authentication> checkToken(String token, String key) {
         Claims claims = jwtSigner.parseToken(token);
         Set<String> roles = Stream.of(claims.get(jwtSigner.getAuthoritiesTag()))
@@ -78,7 +72,7 @@ public class JwtWebFilter implements WebFilter {
 
         return reactorTemplate.opsForSet()
                 .members(key)
-//                .doOnNext(i->log.info("{}",i))
+                .doOnNext(i->log.info("{}",i))
                 .filter(roles::contains)
                 .collectList()
                 .flatMap(list -> {
@@ -99,7 +93,7 @@ public class JwtWebFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         if (request.getMethod() == HttpMethod.OPTIONS) return chain.filter(exchange);
         String path = request.getPath().value();
-        Set<String> permitPath = new HashSet<>(List.of("/api/auth/login", "/api/auth/logout"));
+        Set<String> permitPath = new HashSet<>(List.of("/api/auth/login","/api/auth/logout"));
         if (permitPath.contains(path)) return chain.filter(exchange);
         ServerHttpResponse response = exchange.getResponse();
         String auth = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
@@ -118,7 +112,7 @@ public class JwtWebFilter implements WebFilter {
                     if (isMember) {
                         try {
                             return checkToken(token, key)
-//                                    .doOnNext(info->log.info("{}", info))
+                                    .doOnNext(info->log.info("{}", info))
                                     .flatMap(authentication -> {
                                         if (authentication.getPrincipal() != null) {
                                             return chain.filter(exchange)
