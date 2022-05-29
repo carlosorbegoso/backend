@@ -1,4 +1,4 @@
-package com.skyblue.backend.security.model;
+package com.skyblue.backend.security.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

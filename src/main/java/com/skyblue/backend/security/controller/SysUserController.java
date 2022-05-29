@@ -13,12 +13,9 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
-import com.skyblue.backend.security.model.SysHttpResponse;
+import com.skyblue.backend.security.model.dto.SysHttpResponse;
 import com.skyblue.backend.security.model.SysUser;
 import com.skyblue.backend.security.service.SysUserService;
-
-import static java.awt.SystemColor.info;
-
 
 @RestController
 @AllArgsConstructor
@@ -32,7 +29,7 @@ public class SysUserController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT', 'HR')")
-    Mono<SysHttpResponse> findByName (@RequestParam("username") String username) {
+    Mono<SysHttpResponse> findByName(@RequestParam("username") String username) {
         return sysUserService.findByUsername(username)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
@@ -40,12 +37,15 @@ public class SysUserController {
 
     @GetMapping("all")
     @PreAuthorize("hasAnyRole('ADMIN', 'IT', 'HR')")
-    Flux<SysUser> findAll () {
-        return sysUserService.findAll();
+    Mono<SysHttpResponse> findAll() {
+        return sysUserService.findAll()
+                .collectList()
+                .map(SysHttpResponse::ok)
+                .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
     }
 
     @GetMapping("fake")
-    Flux<SysUser> fake (@RequestParam("count") Long count) throws IOException {
+    Flux<SysUser> fake(@RequestParam("count") Long count) throws IOException {
         // return userDataFaker.fakeUserData(count);
         return null;
     }
@@ -53,20 +53,21 @@ public class SysUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
     @ResponseStatus(value = HttpStatus.OK)
-    Mono<SysHttpResponse> save (@RequestBody SysUser user) {
+    Mono<SysHttpResponse> save(@RequestBody SysUser user) {
 
         return sysUserService.save(user)
-                .map(it->SysHttpResponse
+                .map(it -> SysHttpResponse
                         .builder()
                         .status(HttpStatus.OK.value())
                         .message("Stored successfully")
                         .data(it.withPassword(null))
-                        .build()
-                )
+                        .build())
                 .onErrorResume(err -> {
-                    SysHttpResponse response = new SysHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error running", err.getMessage());
+                    SysHttpResponse response = new SysHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Error running", err.getMessage());
                     if (err instanceof DataIntegrityViolationException) {
-                        response = new SysHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Some fields of stored data are not unique", err.getMessage());
+                        response = new SysHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                "Some fields of stored data are not unique", err.getMessage());
                     }
                     return Mono.just(response);
                 });
@@ -74,7 +75,7 @@ public class SysUserController {
 
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    Mono<SysHttpResponse> update (@RequestBody SysUser user) {
+    Mono<SysHttpResponse> update(@RequestBody SysUser user) {
         return sysUserService.save(user)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
@@ -82,7 +83,7 @@ public class SysUserController {
 
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    Mono<Void> deleteById (@RequestParam("id") long id) {
+    Mono<Void> deleteById(@RequestParam("id") long id) {
         return sysUserService.deleteById(id);
     }
 

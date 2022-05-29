@@ -1,4 +1,5 @@
 package com.skyblue.backend.security.service;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,7 +12,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
-import com.skyblue.backend.security.model.SysUserDetails;
+import com.skyblue.backend.security.model.dto.SysUserDetails;
 
 @Service
 @RequiredArgsConstructor
@@ -26,20 +27,19 @@ public class JwtSigner {
     @Value("${jwt.expiration.duration}")
     private Integer duration;
 
-
-    public String getAuthoritiesTag () {
+    public String getAuthoritiesTag() {
         return authorities;
     }
 
-    public String getIssuerTag () {
+    public String getIssuerTag() {
         return issuer;
     }
 
-    public String getTokenPrefix () {
+    public String getTokenPrefix() {
         return TOKEN_PREFIX;
     }
 
-    public String generateToken (SysUserDetails user) {
+    public String generateToken(SysUserDetails user) {
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
@@ -51,8 +51,7 @@ public class JwtSigner {
                 .compact();
     }
 
-
-    public Claims parseToken (String token) {
+    public Claims parseToken(String token) {
 
         return Jwts
                 .parser()

@@ -1,5 +1,6 @@
-package com.skyblue.backend.security.model;
+package com.skyblue.backend.security.model.dto;
 
+import com.skyblue.backend.security.model.SysUser;
 import lombok.*;
 
 import java.util.List;

@@ -20,12 +20,11 @@ public class SysRoleService {
     private final SysRoleRepository sysRoleRepository;
     private final MarkDataService mark;
 
-
-    public Mono<SysRole> findByName (String name) {
+    public Mono<SysRole> findByName(String name) {
         return sysRoleRepository.findByName(name);
     }
 
-    public Mono<SysRole> save (SysRole role) {
+    public Mono<SysRole> save(SysRole role) {
         if (role.getId() == 0) {
             return mark.createObj(role)
                     .flatMap(sysRoleRepository::save);
@@ -34,11 +33,11 @@ public class SysRoleService {
                 .flatMap(sysRoleRepository::save);
     }
 
-    public Flux<SysRole> findAll () {
+    public Flux<SysRole> findAll() {
         return sysRoleRepository.findAll();
     }
 
-    public Mono<Void> delete (Long id) {
+    public Mono<Void> delete(Long id) {
         return sysRoleRepository.deleteById(id);
     }
 }

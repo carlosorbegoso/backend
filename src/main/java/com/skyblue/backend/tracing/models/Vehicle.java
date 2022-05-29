@@ -1,48 +1,60 @@
 package com.skyblue.backend.tracing.models;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import com.skyblue.backend.security.repository.DataChange;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
+import org.springframework.data.annotation.*;
 import org.springframework.data.relational.core.mapping.Table;
 
-
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @With
-
 @Table("vehicle")
-public class Vehicle  implements Serializable {
+public class Vehicle  implements Serializable, DataChange {
+	@Serial
+	private static final long serialVersionUID = 1L;
 	@Id
-	private Integer vehicleId;
-	private String vehicleCensus;
-	private String vehicleLicensePlate;
-	private String vehicleClass;
-	private String vehicleModel;
-	private int    vehicleOwnerId;
-	private String vehiclePropertyCard;
-	private String vehiclePolice;
-	private String vehicleYerProduction;
-	private String vehicleEngineNumber;
-	private double vehicleWeight;
-	private double vehicleGrossWeight;
-	private String vehicleBrand;
-	private int    vehicleNumberSeats;
-	private int    vehicleNumberPassengers;
-	private String vehicleFuelType;
-	private String vehicleBodywork;
-	private String vehicleColors;
-	private int    vehicleNumberCylinders;
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "Whels")
-	//private List<Whels> vehicleWheels;
-	private double vehicleLength;
-	private double vehicleWidth;
-	private double vehicleHeight;
-	private double vehicleUsefulLoad;
-	private int    vehicleAxes;
-	private String vehicleRegistrationDate;
-	private String vehicleCondition;
-	private String RegisterUser; 
+	private Long id;
+	private String code;
+	private String licensePlate;
+	private String type;
+	private String model;
+	private String propertyCard;
+	private String policy;
+	private String engineSeries;
+	private Double netWeight;
+	private Double grossWeight;
+	private String brand;
+	private Integer numberSeats;
+	private Integer numberPassengers;
+	private String fuelType;
+	private String bodywork;
+	private String colors;
+	private Integer numberCylinders;
+	private Double length;
+	private Double width;
+	private Double height;
+	private Double usefulLoad;
+	private Integer axes;
+	private Double mileage;
+	private String condition;//active, inactive, deleted
+	@CreatedBy
+	private String createBy;
+	@CreatedDate
+	private java.time.LocalDateTime createTime;
+	@LastModifiedBy
+	private String lastUpdateBy;
+	@LastModifiedDate
+	private java.time.LocalDateTime lastUpdateTime;
+	@Transient
+	private List<Wheels> wheels;
+
+	//private Integer ownerId;
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 
 import com.skyblue.backend.security.handler.JwtWebFilter;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -18,13 +17,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @AllArgsConstructor
 public class SecurityConfig {
 
-//    private final SecurityContextRepository securityRepository;
+    // private final SecurityContextRepository securityRepository;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(
             ServerHttpSecurity http,
-            JwtWebFilter jwtWebFilter
-    ) {
+            JwtWebFilter jwtWebFilter) {
 
         return http
                 .authorizeExchange()
@@ -33,8 +31,9 @@ public class SecurityConfig {
                 .pathMatchers("/api/user/**").permitAll()
                 .anyExchange().authenticated()
                 .and()
-                .addFilterAfter(jwtWebFilter, SecurityWebFiltersOrder.FIRST)  //Note here that the execution location must be in securityContextRepository
-//                .securityContextRepository(securityRepository)
+                .addFilterAfter(jwtWebFilter, SecurityWebFiltersOrder.FIRST) // Note here that the execution location
+                                                                             // must be in securityContextRepository
+                // .securityContextRepository(securityRepository)
                 .formLogin().disable()
                 .httpBasic().disable()
                 .csrf().disable()

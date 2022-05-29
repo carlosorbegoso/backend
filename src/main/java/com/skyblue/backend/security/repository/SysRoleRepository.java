@@ -6,7 +6,7 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface SysRoleRepository extends ReactiveCrudRepository<SysRole, Long> {
-    
+
     Mono<SysRole> findByName(String name);
 
 }

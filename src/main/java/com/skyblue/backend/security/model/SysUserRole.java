@@ -1,4 +1,5 @@
 package com.skyblue.backend.security.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,6 @@ import com.skyblue.backend.security.repository.DataChange;
 
 import org.springframework.data.annotation.*;
 import org.springframework.data.relational.core.mapping.Table;
-
 
 @Table("sys_user_role")
 @Data

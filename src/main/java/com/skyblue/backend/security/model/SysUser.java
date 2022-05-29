@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.skyblue.backend.security.repository.DataChange;
 
-
 @Table("sys_user")
 @Data
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class SysUser implements DataChange {
     private long id;
     private String username;
     private String avatar;
-//    @JsonIgnore   // The request returns fields that json does not want to display
+    // @JsonIgnore // The request returns fields that json does not want to display
     private String password;
     private String email;
     private String mobile;
@@ -31,7 +30,7 @@ public class SysUser implements DataChange {
     private java.time.LocalDateTime createTime;
     private String lastUpdateBy;
     private java.time.LocalDateTime lastUpdateTime;
-    @Transient   // does not exist with the field in the database
+    @Transient // does not exist with the field in the database
     private List<String> roles;
 
 }

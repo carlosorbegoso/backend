@@ -2,7 +2,7 @@ package com.skyblue.backend.security.controller;
 
 import lombok.AllArgsConstructor;
 
-import com.skyblue.backend.security.model.SysHttpResponse;
+import com.skyblue.backend.security.model.dto.SysHttpResponse;
 import com.skyblue.backend.security.model.SysRole;
 import com.skyblue.backend.security.service.SysRoleService;
 
@@ -19,7 +19,7 @@ public class SysRoleController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    public Mono<SysHttpResponse> save (@RequestBody SysRole role) {
+    public Mono<SysHttpResponse> save(@RequestBody SysRole role) {
         return sysRoleService.save(role)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
@@ -27,14 +27,14 @@ public class SysRoleController {
 
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    public Mono<SysHttpResponse> update (@RequestBody SysRole role) {
+    public Mono<SysHttpResponse> update(@RequestBody SysRole role) {
         return sysRoleService.save(role)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
     }
 
     @GetMapping("all")
-    public Mono<SysHttpResponse> findAll () {
+    public Mono<SysHttpResponse> findAll() {
         return sysRoleService.findAll()
                 .collectList()
                 .map(SysHttpResponse::ok)
@@ -42,7 +42,7 @@ public class SysRoleController {
     }
 
     @GetMapping
-    public Mono<SysHttpResponse> findByUrl (@RequestParam("name") String name) {
+    public Mono<SysHttpResponse> findByUrl(@RequestParam("name") String name) {
         return sysRoleService.findByName(name)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
@@ -50,7 +50,7 @@ public class SysRoleController {
 
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    public Mono<Void> delete (Long id) {
+    public Mono<Void> delete(Long id) {
         return sysRoleService.delete(id);
 
     }

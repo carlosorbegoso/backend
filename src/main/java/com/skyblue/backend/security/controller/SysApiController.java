@@ -3,13 +3,12 @@ package com.skyblue.backend.security.controller;
 import lombok.AllArgsConstructor;
 
 import com.skyblue.backend.security.model.SysApi;
-import com.skyblue.backend.security.model.SysHttpResponse;
+import com.skyblue.backend.security.model.dto.SysHttpResponse;
 import com.skyblue.backend.security.service.SysApiService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
 
 @RestController
 @RequestMapping("/api/url")
@@ -20,7 +19,7 @@ public class SysApiController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    public Mono<SysHttpResponse> save (@RequestBody SysApi api) {
+    public Mono<SysHttpResponse> save(@RequestBody SysApi api) {
         return sysApiService.save(api)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
@@ -28,14 +27,14 @@ public class SysApiController {
 
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'IT')")
-    public Mono<SysHttpResponse> update (@RequestBody SysApi api) {
+    public Mono<SysHttpResponse> update(@RequestBody SysApi api) {
         return sysApiService.save(api)
                 .map(SysHttpResponse::ok)
                 .onErrorResume(e -> Mono.just(SysHttpResponse.error5xx(e.getMessage(), e)));
     }
 
     @GetMapping("all")
-    public Mono<SysHttpResponse> findAll () {
+    public Mono<SysHttpResponse> findAll() {
         return sysApiService.findAll()
                 .collectList()
                 .map(SysHttpResponse::ok)
@@ -43,7 +42,7 @@ public class SysApiController {
     }
 
     @GetMapping
-    public Mono<SysHttpResponse> findByUrl (@RequestParam("url") String url) {
+    public Mono<SysHttpResponse> findByUrl(@RequestParam("url") String url) {
         return sysApiService.findByUrl(url)
                 .collectList()
                 .map(SysHttpResponse::ok)
@@ -52,7 +51,7 @@ public class SysApiController {
 
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Mono<Void> delete (Long id) {
+    public Mono<Void> delete(Long id) {
         return sysApiService.delete(id);
     }
 }

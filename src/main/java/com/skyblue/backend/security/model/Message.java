@@ -1,4 +1,5 @@
 package com.skyblue.backend.security.model;
+
 import lombok.*;
 
 import java.time.Instant;
@@ -11,6 +12,7 @@ public class Message {
     private String interaction;
     private long index;
     private long created = Instant.now().getEpochSecond();
+
     public Message(String origin, String interaction) {
         this.origin = origin;
         this.interaction = interaction;

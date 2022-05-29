@@ -1,6 +1,6 @@
 package com.skyblue.backend.security.repository;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 public interface DataChange {
 

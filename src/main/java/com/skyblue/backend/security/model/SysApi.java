@@ -13,7 +13,6 @@ import java.util.List;
 
 import com.skyblue.backend.security.repository.DataChange;
 
-
 @Table("sys_api")
 @Data
 @AllArgsConstructor
@@ -29,7 +28,7 @@ public class SysApi implements DataChange {
     private java.time.LocalDateTime createTime;
     private String lastUpdateBy;
     private java.time.LocalDateTime lastUpdateTime;
-    @Transient   // does not exist with the field in the database
+    @Transient // does not exist with the field in the database
     private List<String> roles;
 
     @Override
